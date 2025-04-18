@@ -1,0 +1,136 @@
+const mongoose = require('mongoose');
+//specify where to find the schema
+const User = require('./models/user')
+//connect and display the status 
+mongoose.connect('mongodb://localhost:27017/IT6203')
+    .then(() => { console.log("connected"); })
+    .catch(() => { console.log("error connecting"); });
+
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+
+const cors = require('cors');
+app.use(cors());
+
+//specify which domains can make requests and which methods are allowed
+app.use((req, res, next) => {
+
+    console.log('This line is always called');
+    //app.options('*', cors()); // include before other routes
+    /*if (req.method === "OPTIONS") {
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
+      } else {
+        res.header('Access-Control-Allow-Origin', '*');
+      }*/
+    res.setHeader('Access-Control-Allow-Origin', '*'); //can connect from any host
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); //allowable methods
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+
+    next();
+    /*app.options('/*', (_, res) => {
+        res.sendStatus(200);
+    });*/
+});
+
+//parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+//parse application/json
+app.use(bodyParser.json())
+
+//in the app.get() method below we add a path for the users API 
+//by adding /users, we tell the server that this method will be called when the URL is http://localhost:8000/students is requested
+app.get('/users', (req, res, next) => {
+    //call mongoose method find (MongoDB db.Users.find())
+    User.find()
+        //if data is returned, send data as a response 
+        .then(data => res.status(200).json(data))
+        //if error, send internal server error
+        .catch(err => {
+            console.log('Error: ${err}');
+            res.status(500).json(err);
+        });
+});
+
+//serve incoming post requests to /users
+app.post('/users', (req, res, next) => {
+    /*const user = req.body;
+    console.log(user.firstName + " " + user.lastName);
+    //sent an acknowledgment back to caller 
+    res.status(201).json('Post successful');*/
+
+    // create a new user variable and save request’s fields 
+    const user = new User({
+        firstName: req.body.firstName,
+        mood: req.body.mood,
+        genre: req.body.genre,
+        actor: req.body.actor,
+    });
+
+    //send the document to the database 
+    user.save()
+        //in case of success
+        .then(() => { console.log('Success'); })
+        //if error
+        .catch(err => { console.log('Error:' + err); });
+});
+
+//serve incoming put requests to /users 
+app.put('/users/:id', (req, res, next) => {
+    console.log("id: " + req.params.id)
+    // check that the parameter id is valid 
+    if (mongoose.Types.ObjectId.isValid(req.params.id)) {
+        User.findOneAndUpdate(
+            { _id: req.params.id },
+            {
+                $set: {
+                    firstName: req.body.firstName,
+                    mood: req.body.mood,
+                    genre: req.body.genre,
+                    actor: req.body.actor,
+                }
+            },
+            { new: true }
+        )
+            .then((user) => {
+                if (user) { //what was updated 
+                    console.log(user);
+                } else {
+                    console.log("no data exist for this id");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    } else {
+        console.log("please provide correct id");
+    }
+});
+
+//find a student based on the id
+app.get('/users/:id', (req, res, next) => {
+    //call mongoose method findOne (MongoDB db.Users.findOne())
+    User.findOne({ _id: req.params.id })
+        //if data is returned, send data as a response 
+        .then(data => {
+            res.status(200).json(data)
+            console.log(data);
+        })
+        //if error, send internal server error
+        .catch(err => {
+            console.log('Error: ${err}');
+            res.status(500).json(err);
+        });
+});
+
+//:id is a dynamic parameter that will be extracted from the URL
+app.delete("/users/:id", (req, res, next) => {
+    User.deleteOne({ _id: req.params.id }).then(result => {
+        console.log(result);
+        res.status(200).json("Deleted!");
+    });
+});
+
+//to use this middleware in other parts of the application
+module.exports = app;

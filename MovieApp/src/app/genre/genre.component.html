@@ -1,0 +1,8 @@
+
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <h1>Genre</h1>
+        <h2>Current Genre {{selectedGenre}} <button mat-button color="warn" (click)="onDelete()" [routerLink]="['']">DELETE</button> </h2>
+        <label for="genre">Genre: </label>
+        <input id="genre" type="text" formControlName="genre" required>
+        <button type="submit" [disabled]="!userForm.valid">Submit</button>

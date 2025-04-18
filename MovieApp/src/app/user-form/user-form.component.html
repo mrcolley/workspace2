@@ -1,0 +1,10 @@
+
+
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <h1>User Management</h1>
+    <label for="first-name">First Name: </label>
+    <input id="first-name" type="text" formControlName="firstName" required>
+    <button type="submit" [disabled]="!userForm.valid">Submit</button>
+
+    
