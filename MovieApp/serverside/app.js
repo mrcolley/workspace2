@@ -63,6 +63,15 @@ app.post('/users', (req, res, next) => {
     // create a new user variable and save request’s fields 
     const user = new User({
         firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        street: req.body.street,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+        primaryNumber: req.body.primaryNumber,
+        secondaryNumber: req.body.seondaryNumber,
+        primaryEmail: req.body.primaryEmail,
+        secondaryEmail: req.body.secondaryEmail,
         mood: req.body.mood,
         genre: req.body.genre,
         actor: req.body.actor,
@@ -86,6 +95,15 @@ app.put('/users/:id', (req, res, next) => {
             {
                 $set: {
                     firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    street: req.body.street,
+                    city: req.body.city,
+                    state: req.body.state,
+                    zip: req.body.zip,
+                    primaryNumber: req.body.primaryNumber,
+                    secondaryNumber: req.body.secondaryNumber,
+                    primaryEmail: req.body.primaryEmail,
+                    secondaryEmail: req.body.secondaryEmail,
                     mood: req.body.mood,
                     genre: req.body.genre,
                     actor: req.body.actor,

@@ -23,6 +23,6 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
     NavigationMenuComponent]
 })
 export class AppComponent {
-  title = 'Users App';
+  title = 'Movie Recommendations App';
 
 }

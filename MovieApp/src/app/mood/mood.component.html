@@ -1,45 +1,53 @@
-<head>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            margin: 0;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(4, 50px);
-            gap: 10px;
-        }
-        .grid button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-        }
-        .grid button:hover {
-            background-color: #2980b9;
-        }
-    </style> 
-</head>
-<ul>
-{{selectedMood}}  <button mat-button color="warn" (click)="onDelete()" [routerLink]="['']">DELETE</button>
-</ul>
-<body>
-    <div class="grid">
-        <button value="button1Name"  [innerText]="button1Name" (click)="button1Clicked()"></button>
-        <button value="button2Name"  [innerText]="button2Name" (click)="button2Clicked()"></button>
-        <button value="button3Name"  [innerText]="button3Name" (click)="button3Clicked()"></button>
-        <button value="button4Name"  [innerText]="button4Name" (click)="button4Clicked()"></button>
-        <button value="button5Name"  [innerText]="button5Name" (click)="button5Clicked()"></button>
-        <button value="button6Name"  [innerText]="button6Name" (click)="button6Clicked()"></button>
-        <button value="button7Name"  [innerText]="button7Name" (click)="button7Clicked()"></button>
-        <button value="button8Name"  [innerText]="button8Name" (click)="button8Clicked()"></button>
-        <button value="button9Name"  [innerText]="button9Name" (click)="button9Clicked()"></button>
-    </div>
-</body>
+<div class="app-container">
+
+    <head>
+        <style>
+            body {
+                display: flex;
+                background-image: none !important;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #f0f0f0;
+                margin: 0;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(3, 100px);
+                grid-template-rows: repeat(4, 50px);
+                gap: 10px;
+            }
+
+            .grid button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                border-radius: 5px;
+            }
+
+            .grid button:hover {
+                background-color: #2980b9;
+            }
+        </style>
+    </head>
+    <ul>
+        {{selectedMood}} <button mat-button color="warn" (click)="onDelete()" [routerLink]="['']">DELETE</button>
+    </ul>
+
+    <body>
+        <div class="grid">
+            <button value="button1Name" [innerText]="button1Name" (click)="button1Clicked()"></button>
+            <button value="button2Name" [innerText]="button2Name" (click)="button2Clicked()"></button>
+            <button value="button3Name" [innerText]="button3Name" (click)="button3Clicked()"></button>
+            <button value="button4Name" [innerText]="button4Name" (click)="button4Clicked()"></button>
+            <button value="button5Name" [innerText]="button5Name" (click)="button5Clicked()"></button>
+            <button value="button6Name" [innerText]="button6Name" (click)="button6Clicked()"></button>
+            <button value="button7Name" [innerText]="button7Name" (click)="button7Clicked()"></button>
+            <button value="button8Name" [innerText]="button8Name" (click)="button8Clicked()"></button>
+            <button value="button9Name" [innerText]="button9Name" (click)="button9Clicked()"></button>
+        </div>
+    </body>
+</div>

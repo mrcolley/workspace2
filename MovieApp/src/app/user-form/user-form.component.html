@@ -1,10 +1,105 @@
-
-
-
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<!-- <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <h1>User Management</h1>
     <label for="first-name">First Name: </label>
     <input id="first-name" type="text" formControlName="firstName" required>
-    <button type="submit" [disabled]="!userForm.valid">Submit</button>
+    <button type="submit" [disabled]="!userForm.valid">Submit</button> -->
 
-    
+<div class="app-container">
+    <h2>{{mode}} User Form</h2>
+    <div class="form-container">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first-name">*First Name: </label>
+                    <input id="first-name" type="text" formControlName="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name: </label>
+                    <input id="last-name" type="text" formControlName="lastName">
+                </div>
+            </div>
+
+
+            <div formGroupName="address">
+                <h3>Address</h3>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="street">
+                            Street:
+                        </label>
+                        <input id="street" type="text" formControlName="street">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">
+                            City:
+                        </label>
+                        <input id="city" type="text" formControlName="city">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">
+                            State:
+                        </label>
+                        <input id="state" type="text" formControlName="state">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="zip">
+                            Zip:
+                        </label>
+                        <input id="zip" type="text" formControlName="zip">
+                    </div>
+                </div>
+            </div>
+
+
+            <div formGroupName="phoneNumbers">
+                <h3>Phone numbers</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="primary-number">
+                            *Primary number:
+                        </label>
+                        <input id="primary-number" type="text" formControlName="primaryNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="secondary-number">
+                            Secondary number:
+                        </label>
+                        <input id="secondary-number" type="text" formControlName="secondaryNumber">
+                    </div>
+                </div>
+            </div>
+
+
+            <div formGroupName="emailAddresses">
+                <h3>Email addresses</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="primary-email">
+                            *Primary email:
+                        </label>
+                        <input id="primary-email" type="email" formControlName="primaryEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="secondary-email">
+                            Secondary email:
+                        </label>
+                        <input id="secondary-email" type="email" formControlName="secondaryEmail">
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+            <p class="note">Complete the form's required fields (*) to enable the Submit button</p>
+            <div class="button-row">
+                <button type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid">Submit</button>
+                <button mat-raised-button color="primary" [routerLink]="['/']">Home</button>
+            </div>
+        </form>
+    </div>
+</div>
