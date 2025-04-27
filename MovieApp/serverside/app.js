@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 //specify where to find the schema
 const User = require('./models/user')
 //connect and display the status 
-mongoose.connect('mongodb://localhost:27017/IT6203')
+mongoose.connect('mongodb+srv://IT6203:uPN74PfkBSyEPw69@cluster0.kzwt3bc.mongodb.net/IT6203?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => { console.log("connected"); })
     .catch(() => { console.log("error connecting"); });
 

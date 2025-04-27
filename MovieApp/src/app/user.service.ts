@@ -26,7 +26,7 @@ export class UserService {
 
     //Uses http.post() to post data 
     addUsers(firstName: string, lastName: string, street: string, city: string, state: string, zip: string, primaryNumber: string, secondaryNumber: string, primaryEmail: string, secondaryEmail: string) {
-        this.http.post('http://localhost:8000/users', {firstName, lastName, street, city, zip, primaryNumber, secondaryNumber, primaryEmail, secondaryEmail},)
+        this.http.post('http://localhost:8000/users', {firstName, lastName, street, city, state, zip, primaryNumber, secondaryNumber, primaryEmail, secondaryEmail},)
             .subscribe((responseData) => {
                 console.log(responseData);
             });
@@ -36,7 +36,7 @@ export class UserService {
         //request path http://localhost:8000/users/5xbd456xx 
         //first and last names will be send as HTTP body parameters 
         this.http.put("http://localhost:8000/users/" +
-            userId, { firstName, lastName, street, city, zip, primaryNumber, secondaryNumber, primaryEmail, secondaryEmail })
+            userId, { firstName, lastName, street, city, state, zip, primaryNumber, secondaryNumber, primaryEmail, secondaryEmail })
             .subscribe(() => {
                 console.log('Updated: ' + userId);
             });
