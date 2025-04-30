@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-//specify where to find the schema
+//specify where to find the schemas
 const User = require('./models/user')
+const Genre = require('./models/genre')
 //connect and display the status 
 mongoose.connect('mongodb+srv://IT6203:uPN74PfkBSyEPw69@cluster0.kzwt3bc.mongodb.net/IT6203?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => { console.log("connected"); })
@@ -40,7 +41,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //in the app.get() method below we add a path for the users API 
-//by adding /users, we tell the server that this method will be called when the URL is http://localhost:8000/students is requested
+//by adding /users, we tell the server that this method will be called when the URL is http://localhost:8000/users is requested
 app.get('/users', (req, res, next) => {
     //call mongoose method find (MongoDB db.Users.find())
     User.find()
@@ -149,6 +150,43 @@ app.delete("/users/:id", (req, res, next) => {
         res.status(200).json("Deleted!");
     });
 });
+
+//get genre list from TMDB API and log it to the console
+const url = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
+const options = {
+    method: 'GET',
+    headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZjliNzYwN2U0NWExZTg3OWY4OWM0ZTlkYjVmNzE0ZCIsIm5iZiI6MTc0NTk3ODQ0MS4wOTUsInN1YiI6IjY4MTE4NDQ5MDkwNDAzZDgzNzYxNmNhZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tmMVzaWcLvd5GVL5I6swkFRiqa-vYvOVRb44lFvxzCc'
+    }
+};
+ 
+
+
+fetch(url, options)
+    .then(res => res.json())
+    //.then(json => genre.save(json))
+    .then(json => console.log(json))
+    .catch(err => console.error(err));
+
+
+/*options = JSON.parse(options, 'utf-8');
+const genres = new Genre({
+    //id: res.body.id,
+    //name: res.body.name
+})
+async function loadGenres() {
+    try {
+        await Genre.insertMany(options);
+        console.log('Done!');
+        process.exit();
+    } catch (e) {
+        console.log(e);
+        process.exit();
+    }
+}
+loadGenres();*/
+
 
 //to use this middleware in other parts of the application
 module.exports = app;
