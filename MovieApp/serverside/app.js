@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 //specify where to find the schemas
 const User = require('./models/user')
-const Genre = require('./models/genre')
+//const Genre = require('./models/genre')
 //connect and display the status 
 mongoose.connect('mongodb+srv://IT6203:uPN74PfkBSyEPw69@cluster0.kzwt3bc.mongodb.net/IT6203?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => { console.log("connected"); })
@@ -39,6 +39,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 //parse application/json
 app.use(bodyParser.json())
+
+app.use(express.json());  // so req.body is already a JS object
 
 //in the app.get() method below we add a path for the users API 
 //by adding /users, we tell the server that this method will be called when the URL is http://localhost:8000/users is requested
@@ -160,24 +162,60 @@ const options = {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZjliNzYwN2U0NWExZTg3OWY4OWM0ZTlkYjVmNzE0ZCIsIm5iZiI6MTc0NTk3ODQ0MS4wOTUsInN1YiI6IjY4MTE4NDQ5MDkwNDAzZDgzNzYxNmNhZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tmMVzaWcLvd5GVL5I6swkFRiqa-vYvOVRb44lFvxzCc'
     }
 };
- 
 
+let data;
 
 fetch(url, options)
     .then(res => res.json())
     //.then(json => genre.save(json))
-    .then(json => console.log(json))
+    //.then(json => console.log(json))
+    .then(json => {
+        const data = json;
+        console.log(data);
+        data.foreach(item => {
+          console.log(`id: ${item.id}, name: ${item.name}`);
+        });
+      })
     .catch(err => console.error(err));
 
+//const newGenres = json;
+//console.log(newGenres);
+/*app.post('/genres', (req, res) => {
+    Genre.create(req.body)
+        .then(doc => {
+            // `doc` is the saved document
+            res.status(201).json(doc);
+        })
+        .catch(err => {
+            res.status(500).json({ error: err.message });
+        });
+});*/
 
-/*options = JSON.parse(options, 'utf-8');
-const genres = new Genre({
+//const fs = require('fs');
+
+// Read and parse the JSON file
+//const data = JSON.parse(json);
+
+// Option 1: Extract into separate arrays
+//const ids = data.map(item => item.ID);
+//const names = data.map(item => item.Name);
+
+// Option 2: Keep as array of objects
+//const entries = data; // same as data
+
+// Display results
+//console.log("IDs:", ids);
+//console.log("Names:", names);
+//console.log("Entries:", entries);
+
+//options = JSON.parse(options, 'utf-8');
+/*const genres = new Genre({
     //id: res.body.id,
     //name: res.body.name
 })
 async function loadGenres() {
     try {
-        await Genre.insertMany(options);
+        await Genre.insertMany(json);
         console.log('Done!');
         process.exit();
     } catch (e) {
@@ -186,6 +224,8 @@ async function loadGenres() {
     }
 }
 loadGenres();*/
+
+
 
 
 //to use this middleware in other parts of the application

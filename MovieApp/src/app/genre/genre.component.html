@@ -1,8 +1,35 @@
-
 <div class="app-container">
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <h1>Genre</h1>
-        <h2>Current Genre {{selectedGenre}} <button mat-button color="warn" (click)="onDelete()" [routerLink]="['']">DELETE</button> </h2>
+        <h2>Current Genre {{selectedGenre}} <button mat-button color="warn" (click)="onDelete()"
+                [routerLink]="['']">DELETE</button> </h2>
         <label for="genre">Genre: </label>
         <input id="genre" type="text" formControlName="genre" required>
         <button mat-raised-button type="submit" [disabled]="!userForm.valid">Submit</button>
+
+       <!-- <div class="app-container">
+            <div class="background-container">
+                <div class="list-card">
+                    <div class="foreground-container">
+                        <div>
+                            <ul *ngFor="let genre of Genres; let i = index" class="user-list">
+                                <li> {{user._id}}: {{user.firstName}} {{user.lastName}} {{user.mood}} {{user.genre}}
+                                    {{user.actor}}
+                                    (index {{i}})
+                                    <button mat-button color="warn" (click)="onDelete(user._id)">DELETE USER</button>
+                                    <button mat-button color="accent" [routerLink]="['/editUser', user._id]">EDIT
+                                        USER</button>
+                                    <button mat-button color="accent" [routerLink]="['/mood', user._id]">MOOD</button>
+                                    <button mat-button color="accent" [routerLink]="['/genre', user._id]">GENRE</button>
+                                    <button mat-button color="accent" [routerLink]="['/actor', user._id]">ACTOR</button>
+                                </li>
+                            </ul>
+                            <div class="button-group">
+                                <button mat-raised-button [routerLink]="['/addUser']">Add User</button>
+                                <button mat-raised-button [routerLink]="['/']">Home</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
