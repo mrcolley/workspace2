@@ -7,21 +7,47 @@ import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute, ParamMap, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'genre-form',
+  selector: 'app-genre',
   imports: [
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
+    RouterModule,
+    CommonModule,
     RouterModule
   ],
-  providers: [ UserService],
+  providers: [ UserService ] ,
   templateUrl: './genre.component.html',
   styleUrl: './genre.component.css'
 })
 export class GenreComponent implements OnInit {
+  //declare variable to hold response and make it public to be accessible from components.html
+  public genres: any;
+  //initialize the call using UserService 
+  constructor(private _myService: UserService) { }
+  ngOnInit() {
+    this.getGenres(); //call getGenres() method to load data
+  }
+  //method called OnInit
+  getGenres() {
+    //uses http.get() to load data
+    this._myService.getGenres().subscribe({
+      //read data and assign to public variable genres
+      next: ((data: any) => { this.genres = data }),
+      error: ((err: any) => console.error(err)),
+      complete: (() => console.log('finished loading'))
+    });
+  }
+  /*onDelete(userId: string) {
+    this._myService.deleteUser(userId);
+  }*/
+}
+
+/*export class GenreComponent implements OnInit {
   public mode = 'Add'; //default mode
   private id: any //user ID
   private user: any //user object
@@ -35,7 +61,7 @@ export class GenreComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
         if (paramMap.has('_id')) {
-            this.mode = 'Edit'; /*request had a parameter _id */
+            this.mode = 'Edit'; //request had a parameter _id 
             this.id = paramMap.get('_id');
 
             this._myService.getUser(this.id).subscribe({
@@ -84,4 +110,4 @@ onDelete() {
       console.log("You Updated: " + genre + " ")
     }
   }
-}
+}*/

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 //specify where to find the schemas
 const User = require('./models/user')
-//const Genre = require('./models/genre')
+const Genre = require('./models/genre')
 //connect and display the status 
 mongoose.connect('mongodb+srv://IT6203:uPN74PfkBSyEPw69@cluster0.kzwt3bc.mongodb.net/IT6203?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => { console.log("connected"); })
@@ -153,6 +153,18 @@ app.delete("/users/:id", (req, res, next) => {
     });
 });
 
+app.get('/genres', (req, res, next) => {
+    //call mongoose method find (MongoDB db.Genres.find())
+    Genre.find()
+        //if data is returned, send data as a response 
+        .then(data => res.status(200).json(data))
+        //if error, send internal server error
+        .catch(err => {
+            console.log('Error: ${err}');
+            res.status(500).json(err);
+        });
+});
+
 //get genre list from TMDB API and log it to the console
 const url = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
 const options = {
@@ -163,19 +175,19 @@ const options = {
     }
 };
 
-let data;
+//let data;
 
 fetch(url, options)
     .then(res => res.json())
     //.then(json => genre.save(json))
-    //.then(json => console.log(json))
-    .then(json => {
+    .then(json => console.log(json))
+    /*.then(json => {
         const data = json;
         console.log(data);
         data.foreach(item => {
           console.log(`id: ${item.id}, name: ${item.name}`);
         });
-      })
+      })*/
     .catch(err => console.error(err));
 
 //const newGenres = json;

@@ -21,6 +21,9 @@ export const routes: Routes = [
     },{
         path: 'mood/:_id',  //when users listed
         component: MoodComponent
+    }, {
+        path: 'listGenres',  //when genres listed
+        component: GenreComponent
     },{
         path: 'genre/:_id',  //when users listed
         component: GenreComponent

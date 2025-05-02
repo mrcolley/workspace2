@@ -123,6 +123,9 @@ export class UserService {
     getGenre(userId: string) {
         return this.http.get('http://localhost:8000/users/' + userId);
     }
+    getGenres() {
+        return this.http.get('http://localhost:8000/genres')
+    }
 
     deleteGenre(userId: string, genre: string) {
         this.http.put("http://localhost:8000/users/" + userId, { genre })
