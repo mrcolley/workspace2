@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     RouterModule
   ],
-  providers: [ UserService ] ,
+  providers: [UserService],
   templateUrl: './genre.component.html',
   styleUrl: './genre.component.css'
 })
@@ -42,6 +42,26 @@ export class GenreComponent implements OnInit {
       complete: (() => console.log('finished loading'))
     });
   }
+  public formBuilder = inject(FormBuilder);
+  userForm = this.formBuilder.group({
+    genre: [''],
+  });
+
+  onSubmit() {
+    let genre = this.userForm.get('genre')?.value ?? "";
+
+
+    console.log("You submitted: " + genre + " ")
+
+    /*if (this.mode == 'Add') {
+      this._myService.addGenre(genre);
+      console.log("You Added: " + genre + " ")
+    }
+    if (this.mode == 'Edit') {
+      this._myService.updateGenre(this.id, genre);
+      console.log("You Updated: " + genre + " ")
+    }*/
+  }
   /*onDelete(userId: string) {
     this._myService.deleteUser(userId);
   }*/
@@ -51,7 +71,7 @@ export class GenreComponent implements OnInit {
   public mode = 'Add'; //default mode
   private id: any //user ID
   private user: any //user object
-  
+
   selectedGenre = " ";
 
 
@@ -60,35 +80,35 @@ export class GenreComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-        if (paramMap.has('_id')) {
-            this.mode = 'Edit'; //request had a parameter _id 
-            this.id = paramMap.get('_id');
+      if (paramMap.has('_id')) {
+        this.mode = 'Edit'; //request had a parameter _id 
+        this.id = paramMap.get('_id');
 
-            this._myService.getUser(this.id).subscribe({
-                next: (data => {
-                    //read data and assign to private variable user
-                    this.user = data;
-                    this.selectedGenre = this.user.genre
-                    this.userForm.patchValue({
-                        genre: this.user.genre,
-                    })
-                }),
+        this._myService.getUser(this.id).subscribe({
+          next: (data => {
+            //read data and assign to private variable user
+            this.user = data;
+            this.selectedGenre = this.user.genre
+            this.userForm.patchValue({
+              genre: this.user.genre,
+            })
+          }),
 
-                error: (err => console.error(err)),
-                complete: (() => console.log('finished loading'))
-            });
-        }
-        else {
-            this.mode = 'Add';
-            this.id = null;
-        }
+          error: (err => console.error(err)),
+          complete: (() => console.log('finished loading'))
+        });
+      }
+      else {
+        this.mode = 'Add';
+        this.id = null;
+      }
     });
-}
+  }
 
-onDelete() {
-  this.selectedGenre = " ";
-  this._myService.deleteGenre(this.id, this.selectedGenre);
-}
+  onDelete() {
+    this.selectedGenre = " ";
+    this._myService.deleteGenre(this.id, this.selectedGenre);
+  }
 
   public formBuilder = inject(FormBuilder);
   userForm = this.formBuilder.group({
@@ -97,15 +117,15 @@ onDelete() {
 
   onSubmit() {
     let genre = this.userForm.get('genre')?.value ?? "";
-  
-  
+
+
     console.log("You submitted: " + genre + " ")
 
-    if (this.mode == 'Add'){
+    if (this.mode == 'Add') {
       this._myService.addGenre(genre);
       console.log("You Added: " + genre + " ")
     }
-    if (this.mode == 'Edit'){
+    if (this.mode == 'Edit') {
       this._myService.updateGenre(this.id, genre);
       console.log("You Updated: " + genre + " ")
     }
